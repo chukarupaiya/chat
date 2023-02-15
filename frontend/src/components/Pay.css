@@ -1,0 +1,63 @@
+.payment_amount{
+    font-size: 42px;
+    margin-top: 4px;
+}
+
+.payment_user{
+    font-size: 15px;
+    margin-top: 5px;
+    font-weight: 600;
+}
+
+
+.payment_status{
+    font-size: 12px;
+    margin-top: 5px;
+    color: green;
+}
+
+.payment_date{
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+
+.payment_choice{
+    display: flex;
+    width: 100%;
+    height: 50%;
+    background: red;
+    margin-top: 10px;
+    border-radius: 10px;
+    font-size: 2rem;
+    position: relative;
+}
+
+.choice_label{
+    position: absolute;
+    top:50%;
+    left:35%;
+    z-index: 10;
+    color: white;
+    font-size: 25px;
+    transform: translate(-50%,-50%);
+
+}
+
+.pay_btn{
+    width: 100%;
+    border-radius: 20px;
+    background-color: rgb(73, 73, 73);
+    color: white;
+    margin: auto;
+    margin-top: 8px;
+    height: 40px;
+    font-weight: 600;
+}
+
+.pay_btn:hover{
+    cursor: pointer;
+    background-color: rgb(96, 96, 96);
+}
+
+

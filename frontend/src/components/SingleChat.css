@@ -1,0 +1,19 @@
+.pay-btn{
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border-radius: 50%;
+    align-items: center;
+    padding-left: 12px;
+    margin-left: 10px;
+    color: white;
+    background-color: rgb(54,57,62);
+    
+}
+
+
+.pay-btn:hover{
+    cursor: pointer;
+    background-color: rgb(114,137,218);
+    
+}

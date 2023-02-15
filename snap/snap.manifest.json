@@ -1,0 +1,36 @@
+{
+  "version": "0.7.1",
+  "proposedName": "Address Book Snap",
+  "description": "An example snap for storing address book entries.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Montoya/address-book-snap-tutorial.git"
+  },
+  "source": {
+    "shasum": "dXW9LAGa8Oh7LFh2PKXxVF8RfBt42nBfRsUwYuaU43E=",
+    "location": {
+      "npm": {
+        "filePath": "dist/bundle.js",
+        "iconPath": "images/icon.svg",
+        "packageName": "@metamask/address-book-snap",
+        "registry": "https://registry.npmjs.org/"
+      }
+    }
+  },
+  "initialPermissions": {
+    "snap_confirm": {},
+    "snap_notify": {},
+    "endowment:network-access": {},
+    "endowment:cronjob": {
+      "jobs": [
+        {
+          "expression": "*/1 * * * *",
+          "request": {
+            "method": "inApp"
+          }
+        }
+      ]
+    }
+  },
+  "manifestVersion": "0.1"
+}
