@@ -40,6 +40,8 @@ import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
 
+import senderc20 from "../contracts/frontend-interaction/senderc20";
+
 const ENDPOINT = "http://localhost:5000"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 var socket, selectedChatCompare;
 
@@ -50,7 +52,7 @@ const Pay = ({
   refAgain,
   toClose,
   Moralis,
-  sender_id
+  sender_id,
 }) => {
   const [messages, setMessages] = useState([]);
   const [currency, setCurrency] = useState("");
@@ -60,8 +62,7 @@ const Pay = ({
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
   const toast = useToast();
-
-  
+  const [token_address, setTokenAddress] = useState("");
 
   const defaultOptions = {
     loop: true,
@@ -75,9 +76,15 @@ const Pay = ({
     ChatState();
 
   const sendMessage = async (event) => {
+    senderc20(
+      token_address,
+      sender_id,
+      newMessage,
+      "0x0C9d33186f7D87A94cBA10F3083BB208A49c1647"
+    );
 
-    
-    
+    //console.log(token_address+" "+sender_id+" "+newMessage);
+
     if (newMessage) {
       socket.emit("stop typing", selectedChat._id);
       try {
@@ -99,7 +106,7 @@ const Pay = ({
             chat_mode: "private",
             payment_type: payment_type,
             currency: currency,
-            receiver_id:sender_id
+            receiver_id: sender_id,
           },
           config
         );
@@ -142,7 +149,7 @@ const Pay = ({
             chat_mode: "private",
             payment_type: payment_type,
             currency: currency,
-            receiver_id:sender_id
+            receiver_id: sender_id,
           },
           config
         );
@@ -213,7 +220,7 @@ const Pay = ({
   useEffect(async () => {
     const { EvmChain } = require("@moralisweb3/common-evm-utils");
 
-    const address = "0xE7B0a0ca3443FF1C90E8f3d7fce8B58bd308ca5f";
+    const address = "0x0C9d33186f7D87A94cBA10F3083BB208A49c1647";
 
     const chain = EvmChain.MUMBAI;
 
@@ -229,7 +236,11 @@ const Pay = ({
   }, [Moralis]);
 
   const options2 = options.map((d) => {
-    return <option value={d.symbol}>{d.symbol}&ensp;&ensp;&ensp;{Math.pow(10,-18)*d.balance}</option>;
+    return (
+      <option value={d.symbol + "|" + d.token_address}>
+        {d.symbol}&ensp;&ensp;(bal:{Math.pow(10, -18) * d.balance})
+      </option>
+    );
   });
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -309,8 +320,8 @@ const Pay = ({
                 margin={"auto"}
                 name="currency"
                 onChange={(event) => {
-                  console.log(event.target.value);
-                  setCurrency(event.target.value);
+                  setTokenAddress(event.target.value.split("|")[1]);
+                  setCurrency(event.target.value.split("|")[0]);
                 }}
               >
                 {options2}

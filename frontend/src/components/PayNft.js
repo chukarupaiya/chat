@@ -50,7 +50,7 @@ const PayNft = ({
   refAgain,
   toClose,
   Moralis,
-  sender_id
+  sender_id,
 }) => {
   const [messages, setMessages] = useState([]);
   const [currency, setCurrency] = useState("");
@@ -60,6 +60,8 @@ const PayNft = ({
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
   const toast = useToast();
+  const [options, setOptions] = useState([]);
+  const [imageUrl, setImageUrl] = useState("");
 
   const defaultOptions = {
     loop: true,
@@ -87,14 +89,14 @@ const PayNft = ({
         const { data } = await axios.post(
           "/api/message",
           {
-            content:currency,
+            content: currency,
             chatId: selectedChat,
             payment: true,
             payment_mode: "pay",
             chat_mode: "private",
             payment_type: "NFT",
             currency: currency,
-            receiver_id:sender_id
+            receiver_id: sender_id,
           },
           config
         );
@@ -114,7 +116,6 @@ const PayNft = ({
       refAgain();
     }
   };
-
 
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -142,37 +143,39 @@ const PayNft = ({
     });
   });
 
-  const [options, setOptions] = useState([]);
-
   useEffect(async () => {
     const { EvmChain } = require("@moralisweb3/common-evm-utils");
 
     const address = "0xf5b7a2f2a99aEa196994f525f531D648417d2706";
 
     const chain = EvmChain.MUMBAI;
-    
+
     if (Moralis != undefined) {
-       
-        const response = await Moralis.EvmApi.nft.getWalletNFTs({
-            address,
-            chain,
-         });
-    
+      const response = await Moralis.EvmApi.nft.getWalletNFTs({
+        address,
+        chain,
+      });
+
       console.log(response.toJSON());
       setOptions(response.toJSON().result);
     }
   }, [Moralis]);
 
-  const options2 = options.filter((d) => {
-    if(JSON.parse(d.metadata)!=null){
-        return true
-        
-    }else{
+  const options2 = options
+    .filter((d) => {
+      if (JSON.parse(d.metadata) != null) {
+        return true;
+      } else {
         return false;
-    }
-  }).map((d)=>{
-    return <option value={d.name+"|"+JSON.parse(d.metadata).image} >{d.name}&ensp;&ensp;&ensp;{d.token_id}</option>;
-  });
+      }
+    })
+    .map((d) => {
+      return (
+        <option value={d.name + "|" + JSON.parse(d.metadata).image}>
+         {d.name}&ensp;&ensp;(tokenId:{d.token_id})
+        </option>
+      );
+    });
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -203,7 +206,7 @@ const PayNft = ({
         isCentered
       >
         <ModalOverlay />
-        <ModalContent h="410px" bg={"rgb(30,33,36)"} color="white">
+        <ModalContent h="550px" bg={"rgb(30,33,36)"} color="white">
           <ModalHeader
             fontSize="40px"
             fontFamily="Work sans"
@@ -215,6 +218,9 @@ const PayNft = ({
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
+            <div className="imageNft">
+            {imageUrl == "" && <p>selected NFT</p>}
+              {imageUrl != "" && <img src={imageUrl}></img>}</div>
             <FormControl
               onSubmit={sendMessage}
               id="first-name"
@@ -226,13 +232,14 @@ const PayNft = ({
               <Select
                 placeholder="select the NFT"
                 size="lg"
+                fontSize={"15px"}
                 width={"80%"}
                 margin={"auto"}
                 name="currency"
                 onChange={(event) => {
-                console.log(event.target);
+                  console.log(event.target);
                   console.log(event.target.value.split("|")[0]);
-                  console.log(event.target.value.split("|")[1]);
+                  setImageUrl(event.target.value.split("|")[1]);
                   setCurrency(event.target.value);
                 }}
               >

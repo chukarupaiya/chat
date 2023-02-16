@@ -156,7 +156,8 @@ const Signup = (props) => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={handleClick}>
+            <Button h="1.75rem" size="sm" onClick={handleClick} color="black"
+        bg="white">
               {show ? "Hide" : "Show"}
             </Button>
           </InputRightElement>
@@ -171,13 +172,14 @@ const Signup = (props) => {
             onChange={(e) => setConfirmpassword(e.target.value)}
           />
           <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={handleClick}>
+            <Button h="1.75rem" size="sm" onClick={handleClick} color="black"
+        bg="white">
               {show ? "Hide" : "Show"}
             </Button>
           </InputRightElement>
         </InputGroup>
       </FormControl>
-      <FormControl id="pic">
+      {/* <FormControl id="pic">
         <FormLabel>Upload your Picture</FormLabel>
         <Input
           type="file"
@@ -185,13 +187,15 @@ const Signup = (props) => {
           accept="image/*"
           onChange={(e) => postDetails(e.target.files[0])}
         />
-      </FormControl>
+      </FormControl> */}
       <Button
-        colorScheme="blue"
+        
         width="100%"
         style={{ marginTop: 15 }}
         onClick={submitHandler}
         isLoading={picLoading}
+        color="black"
+        bg="white"
       >
         Sign Up
       </Button>

@@ -88,14 +88,16 @@ const Login = (props) => {
             placeholder="Enter password"
           />
           <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={handleClick}>
+            <Button h="1.75rem" size="sm" onClick={handleClick} color="black"
+        bg="white">
               {show ? "Hide" : "Show"}
             </Button>
           </InputRightElement>
         </InputGroup>
       </FormControl>
       <Button
-        colorScheme="blue"
+        color="black"
+        bg="white"
         width="100%"
         style={{ marginTop: 15 }}
         onClick={submitHandler}
