@@ -19,7 +19,7 @@ import { connectWallet } from "../components/interact";
 
 function Homepage() {
   const history = useHistory();
-  const [walletAddr, setWalletAddr] = useState("0x0C9d33186f7D87A94cBA10F3083BB208A49c1647");
+  const [walletAddr, setWalletAddr] = useState("0xE7B0a0ca3443FF1C90E8f3d7fce8B58bd308ca5f");
 
   localStorage.setItem("address", walletAddr);
   //0xE7B0a0ca3443FF1C90E8f3d7fce8B58bd308ca5f-->sai

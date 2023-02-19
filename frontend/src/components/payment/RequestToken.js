@@ -97,7 +97,7 @@ const RequestToken = (props) => {
             maxWidth: "75%",
             minWidth: "260px",
             color: "white",
-            height: "185px",
+            height: "215px",
         }}
       >
         <p class="payment_user">Requested to {receiver}</p>
