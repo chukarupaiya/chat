@@ -14,17 +14,63 @@ async function myFunction() {
   
   
   
-  const resp = await fetch('https://backend-staging.epns.io/apis/v1/users/eip155:80001:0xdb340A9B85b9C2C5b25aA06E182472B02edC8Cde/feeds ');
+  const resp = await fetch("https://backend-staging.epns.io/apis/v1/users/eip155:80001:0xdb340A9B85b9C2C5b25aA06E182472B02edC8Cde/feeds?limit=1&&spam=true");
   const json = await resp.json();
-  console.log(json); 
+  console.log(json);
+  const persistedData = await snap.request({
+    method: "snap_manageState",
+    params: {
+      operation: "get"
+    }
+  });
 
-  const stringifiedResponse = JSON.stringify(json);
-  const hlo = JSON.parse(stringifiedResponse);
-  const notification = hlo.feeds[0].payload.notification.body; 
+  if (persistedData == undefined) {
+    await snap.request({
+      method: "snap_manageState",
+      params: {
+        operation: "update",
+        newState: {
+          time: json.epoch
+        }
+      }
+    }); 
 
-  const body = notification.body; 
+    const stringifiedResponse = JSON.stringify(json);
+    const hlo = JSON.parse(stringifiedResponse);
+    const notification = hlo.feeds[0].payload.notification.body; 
 
-  return notification;
+    const body = notification.body; 
+
+    return notification;
+  } else {
+    if (persistedData.time < json.epoch) {
+      
+      const stringifiedResponse = JSON.stringify(json);
+      const hlo = JSON.parse(stringifiedResponse);
+      const notification = hlo.feeds[0].payload.notification.body; 
+
+      const body = notification.body;
+      await snap.request({
+        method: 'snap_manageState',
+        params: {
+          operation: 'clear'
+        }
+      });
+      await snap.request({
+        method: "snap_manageState",
+        params: {
+          operation: "update",
+          newState: {
+            time: json.epoch
+          }
+        }
+      }); 
+
+      return notification;
+    } else {
+      return null;
+    }
+  }
 }
 
 },{}],2:[function(require,module,exports){

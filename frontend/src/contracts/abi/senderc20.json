@@ -2,6 +2,29 @@
 	{
 		"inputs": [
 			{
+				"internalType": "address payable",
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"internalType": "contract IERC721",
+				"name": "_nft",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_tokenID",
+				"type": "uint256"
+			}
+		],
+		"name": "SendNFT",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "address[]",
 				"name": "payees",
 				"type": "address[]"
@@ -10,6 +33,11 @@
 				"internalType": "uint256",
 				"name": "amount",
 				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_note",
+				"type": "string"
 			}
 		],
 		"name": "SendsplitETH",
@@ -33,11 +61,39 @@
 				"internalType": "contract IERC20",
 				"name": "token",
 				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "_note",
+				"type": "string"
 			}
 		],
 		"name": "SendsplitToken",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_note",
+				"type": "string"
+			}
+		],
+		"name": "senEth",
+		"outputs": [],
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -66,29 +122,6 @@
 		"name": "sendToken",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_note",
-				"type": "string"
-			}
-		],
-		"name": "senEth",
-		"outputs": [],
-		"stateMutability": "payable",
 		"type": "function"
 	}
 ]

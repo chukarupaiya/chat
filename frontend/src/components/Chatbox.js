@@ -11,11 +11,11 @@ const Chatbox = ({ fetchAgain, setFetchAgain,Moralis,EvmChain }) => {
       d={{ base: selectedChat ? "flex" : "none", md: "flex" }}
       alignItems="center"
       flexDir="column"
-      p={3}
-      bg="rgb(54,57,62)"
+      bg="rgb(66,69,73)"
       w={{ base: "100%", md: "68%" }}
-      borderRadius="lg"
-     
+      position={"relative"}
+      height={"100%"}
+      overflow="hidden"
     >
       <SingleChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} Moralis={Moralis} EvmChain={EvmChain} />
     </Box>

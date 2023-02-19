@@ -3,7 +3,8 @@
 .App {
   min-height: 100vh;
   display: flex;
-  background-color: rgb(30,33,36);
+  /* background-color: rgb(30,33,36); */
+  background: linear-gradient(to bottom,rgb(30,33,36) 30%,rgb(17, 2, 26));
   background-position: center;
   background-size: cover;
 }

@@ -1,10 +1,10 @@
-const { ethers, BigNumber } = require("ethers");
+const { ethers} = require("ethers");
 const { POSClient, use } = require("@maticnetwork/maticjs");
 const { Web3ClientPlugin } = require("@maticnetwork/maticjs-ethers");
 
 
 
-async function senderc20(token_address,receiver_address,amount1,sender_address) {
+async function senderc20(token_address,receiver_address,amount1,sender_address,note) {
   const contractabi = require("../abi/senderc20.json");
   const contractaddr = "0xAAEFCa53e21E85C00B1Db5090fF2EC275b6d4D90";
 
@@ -53,8 +53,8 @@ async function senderc20(token_address,receiver_address,amount1,sender_address) 
   });
   console.log("3");
 
-  const note = "";
-  const senderc20 = await contract_signer.sendToken(token_address,receiver_address,amount,"");
+  
+  const senderc20 = await contract_signer.sendToken(token_address,receiver_address,amount,note,{gasLimit: 210000});
 }
 
 export default senderc20;

@@ -2,8 +2,9 @@ import { FormControl } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
 import "./styles.css";
+import { useDisclosure } from "@chakra-ui/hooks";
 import "./SingleChat.css";
-import { IconButton, Spinner, useToast } from "@chakra-ui/react";
+import { IconButton, Spinner, useToast, Button } from "@chakra-ui/react";
 import { getSender, getSenderFull } from "../config/ChatLogics";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -12,17 +13,26 @@ import ProfileModal from "./miscellaneous/ProfileModal";
 import ScrollableChat from "./ScrollableChat";
 import Lottie from "react-lottie";
 import animationData from "../animations/typing.json";
-
+import {
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+} from "@chakra-ui/modal";
+import ChatLoading from "./ChatLoading";
 import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
 import Pay from "./Pay";
 import PaymentChoice from "./PaymentChoice";
+import GroupPayment from "./GroupPayment";
+import GroupBox1 from "./miscellaneous/GroupBox1";
 
 const ENDPOINT = "http://localhost:5000"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 var socket, selectedChatCompare;
 
-const SingleChat = ({ fetchAgain, setFetchAgain ,Moralis, EvmChain}) => {
+const SingleChat = ({ fetchAgain, setFetchAgain, Moralis, EvmChain }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
@@ -30,6 +40,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain ,Moralis, EvmChain}) => {
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
   const toast = useToast();
+  const [search, setSearch] = useState("");
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const searchResult = [1];
 
   const defaultOptions = {
     loop: true,
@@ -70,7 +83,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain ,Moralis, EvmChain}) => {
         duration: 5000,
         isClosable: true,
         position: "bottom",
-        receiver_id:getSender(user, selectedChat.users)
+        receiver_id: getSender(user, selectedChat.users),
       });
     }
   };
@@ -93,10 +106,12 @@ const SingleChat = ({ fetchAgain, setFetchAgain ,Moralis, EvmChain}) => {
             content: newMessage,
             chatId: selectedChat,
             payment: false,
-            payment_mode:"false",
-            chat_mode:"private",
-            payment_type:"false",
-            currency:"false",
+            payment_mode: "false",
+            chat_mode: "private",
+            payment_type: "false",
+            currency: "false",
+            note: "empty",
+            token_address: "empty",
           },
           config
         );
@@ -174,126 +189,192 @@ const SingleChat = ({ fetchAgain, setFetchAgain ,Moralis, EvmChain}) => {
 
   return (
     <>
-      {selectedChat ? (
-        <>
-          <Text
-            fontSize={{ base: "28px", md: "30px" }}
-            pb={3}
-            px={2}
-            w="100%"
-            fontFamily="Work sans"
-            d="flex"
-            justifyContent={{ base: "space-between" }}
-            alignItems="center"
-            color="white"
-          >
-            <IconButton
-              d={{ base: "flex", md: "none" }}
-              icon={<ArrowBackIcon />}
-              onClick={() => setSelectedChat("")}
-            />
-            {messages &&
-              (!selectedChat.isGroupChat ? (
-                <>
-                  {getSender(user, selectedChat.users)}
-                  <ProfileModal
+      <div id="single_class_div">
+        {selectedChat ? (
+          <>
+            <Text
+              fontSize={{ base: "20px", md: "20px" }}
+              pb={3}
+              px={2}
+              w="100%"
+              fontFamily="Work sans"
+              d="flex"
+              justifyContent={{ base: "space-between" }}
+              alignItems="center"
+              color="white"
+              position={"absolute"}
+              top={"0"}
+              left={"0"}
+              padding={"10px"}
+              bg="blackAlpha.400"
+              backdropFilter="auto"
+              backdropBlur="6px"
+              zIndex={"1000"}
+            >
+              <IconButton
+                d={{ base: "flex", md: "none" }}
+                icon={<ArrowBackIcon />}
+                onClick={() => setSelectedChat("")}
+              />
+              {messages &&
+                (!selectedChat.isGroupChat ? (
+                  <>
+                    <p className="font1">
+                      {getSender(user, selectedChat.users)}
+                    </p>
+                    {/* <ProfileModal
                     user={getSenderFull(user, selectedChat.users)}
-                  />
-                </>
+                  /> */}
+                  </>
+                ) : (
+                  <Box justifyContent={"space-between"} width={"100%"} display={"flex"}>
+                    <p>{selectedChat.chatName}</p>
+                    <div style={{"display":"flex"}}>
+                      <Button
+                        variant="ghost"
+                        onClick={onOpen}
+                        className={"summa"}
+                        _hover={{ bg: "rgb(3, 252, 173);", color: "black" }}
+                      >
+                        <Text>#search</Text>
+                      </Button>
+                      <UpdateGroupChatModal
+                        fetchMessages={fetchMessages}
+                        fetchAgain={fetchAgain}
+                        setFetchAgain={setFetchAgain}
+                      />
+                    </div>
+                  </Box>
+                ))}
+            </Text>
+            <Box
+              d="flex"
+              flexDir="column"
+              justifyContent="flex-end"
+              p={3}
+              bg="rgb(66,69,73)"
+              w="100%"
+              h="105%"
+              borderRadius="lg"
+              overflowY="hidden"
+              paddingTop={"10px"}
+            >
+              {loading ? (
+                <Spinner
+                  size="xl"
+                  w={20}
+                  h={20}
+                  alignSelf="center"
+                  margin="auto"
+                />
               ) : (
-                <>
-                  {selectedChat.chatName.toUpperCase()}
-                  <UpdateGroupChatModal
-                    fetchMessages={fetchMessages}
-                    fetchAgain={fetchAgain}
-                    setFetchAgain={setFetchAgain}
+                <div className="messages">
+                  <ScrollableChat messages={messages} refAgain={refAgain} />
+                </div>
+              )}
+
+              <FormControl
+                onKeyDown={sendMessage}
+                id="first-name"
+                isRequired
+                mt={3}
+              >
+                {istyping ? (
+                  <div>
+                    <Lottie
+                      options={defaultOptions}
+                      // height={50}
+                      width={70}
+                      style={{ marginBottom: 15, marginLeft: 0 }}
+                    />
+                  </div>
+                ) : (
+                  <></>
+                )}
+                <div style={{ margin: "auto", display: "flex" }}>
+                  <Input
+                    variant="filled"
+                    bg="rgb(54,57,62)"
+                    color="white"
+                    focusBorderColor="rgb(54,57,62)"
+                    placeholder="Enter a message.."
+                    value={newMessage}
+                    width="97%"
+                    onChange={typingHandler}
+                    _hover={{ bg: "rgb(54,57,62)" }}
                   />
-                </>
-              ))}
-          </Text>
+                  {messages &&
+                    (!selectedChat.isGroupChat ? (
+                      <PaymentChoice
+                        fetchAgain={fetchAgain}
+                        setFetchAgain={setFetchAgain}
+                        fetchMessages={fetchMessages}
+                        refAgain={refAgain}
+                        Moralis={Moralis}
+                        EvmChain={EvmChain}
+                        sender_id={getSender(user, selectedChat.users)}
+                      />
+                    ) : (
+                      <GroupPayment
+                        fetchAgain={fetchAgain}
+                        setFetchAgain={setFetchAgain}
+                        fetchMessages={fetchMessages}
+                        refAgain={refAgain}
+                        Moralis={Moralis}
+                        EvmChain={EvmChain}
+                        sender_id={getSender(user, selectedChat.users)}
+                      />
+                    ))}
+                </div>
+              </FormControl>
+            </Box>
+            <Drawer placement="right" onClose={onClose} isOpen={isOpen}>
+              <DrawerOverlay />
+              <DrawerContent
+                bg="blackAlpha.400"
+                backdropFilter="auto"
+                backdropBlur="6px"
+                color="white"
+                className={"font1"}
+                border={"0px"}
+              >
+                <DrawerHeader>Search Index</DrawerHeader>
+                <DrawerBody>
+                  <Box d="flex" pb={2}>
+                    <Input
+                      placeholder="Search by wallet address"
+                      mr={2}
+                      _focus={{ borderColor: "#e2b2ff;" }}
+                    />
+                    <Button bg="white" color="black" _hover={{ bg: "#77fcc7" }}>
+                      Go
+                    </Button>
+                  </Box>
+                  {loading ? (
+                    <ChatLoading />
+                  ) : (
+                    searchResult?.map((user) => <GroupBox1 />)
+                  )}
+                </DrawerBody>
+              </DrawerContent>
+            </Drawer>
+          </>
+        ) : (
+          // to get socket.io on same page
           <Box
             d="flex"
-            flexDir="column"
-            justifyContent="flex-end"
-            p={3}
-            bg="rgb(66,69,73)"
+            alignItems="center"
+            justifyContent="center"
+            h="105%"
             w="100%"
-            h="100%"
-            borderRadius="lg"
-            overflowY="hidden"
+            bg="rgb(66,69,73)"
           >
-            {loading ? (
-              <Spinner
-                size="xl"
-                w={20}
-                h={20}
-                alignSelf="center"
-                margin="auto"
-              />
-            ) : (
-              <div className="messages">
-                <ScrollableChat messages={messages} refAgain={refAgain} />
-              </div>
-            )}
-
-            <FormControl
-              onKeyDown={sendMessage}
-              id="first-name"
-              isRequired
-              mt={3}
-            >
-              {istyping ? (
-                <div>
-                  <Lottie
-                    options={defaultOptions}
-                    // height={50}
-                    width={70}
-                    style={{ marginBottom: 15, marginLeft: 0 }}
-                  />
-                </div>
-              ) : (
-                <></>
-              )}
-              <div style={{ margin: "auto", display: "flex" }}>
-                <Input
-                  variant="filled"
-                  bg="rgb(54,57,62)"
-                  color="white"
-                  focusBorderColor="rgb(54,57,62)"
-                  placeholder="Enter a message.."
-                  value={newMessage}
-                  width="97%"
-                  onChange={typingHandler}
-                  _hover={{ bg: "rgb(54,57,62)" }}
-                />
-                <PaymentChoice
-                  fetchAgain={fetchAgain}
-                  setFetchAgain={setFetchAgain}
-                  fetchMessages={fetchMessages}
-                  refAgain={refAgain}
-                  Moralis={Moralis} 
-                  EvmChain={EvmChain}
-                  sender_id={getSender(user, selectedChat.users)}
-                />
-              </div>
-            </FormControl>
+            <Text fontSize="3xl" pb={3} color="white" className="font1">
+              Click on a user to start chatting
+            </Text>
           </Box>
-        </>
-      ) : (
-        // to get socket.io on same page
-        <Box
-          d="flex"
-          alignItems="center"
-          justifyContent="center"
-          h="100%"
-          w="100%"
-          bg="rgb(54,57,62)"
-        >
-          <Text fontSize="3xl" pb={3} fontFamily="Work sans" color="white">
-            Click on a user to start chatting
-          </Text>
-        </Box>
-      )}
+        )}
+      </div>
     </>
   );
 };

@@ -7,7 +7,7 @@
     "url": "https://github.com/Montoya/address-book-snap-tutorial.git"
   },
   "source": {
-    "shasum": "dXW9LAGa8Oh7LFh2PKXxVF8RfBt42nBfRsUwYuaU43E=",
+    "shasum": "qeo9gQFUbgxn6TEs0e/8UUN+2XvBd2u3xCNm5ONFnps=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
@@ -20,6 +20,7 @@
   "initialPermissions": {
     "snap_confirm": {},
     "snap_notify": {},
+    "snap_manageState": {},
     "endowment:network-access": {},
     "endowment:cronjob": {
       "jobs": [

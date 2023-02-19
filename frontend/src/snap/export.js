@@ -3,7 +3,7 @@ const snapId = `local:http://localhost:3000/`;
 export async function connect () {
  
     await window.ethereum.request({
-      method: 'wallet_enable',
+      method: 'wallet_requestSnaps',
       params: [{
         wallet_snap: { [snapId]: {} },
       }]

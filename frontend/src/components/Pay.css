@@ -1,85 +1,213 @@
-.payment_amount{
-    font-size: 42px;
-    margin-top: 4px;
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400&display=swap");
+
+#payment {
+  font-family: "Press Start 2P", cursive;
+  font-weight: 100;
+  margin-top: 20px;
+  margin-bottom: 15px;
 }
 
-.payment_user{
-    font-size: 15px;
-    margin-top: 5px;
-    font-weight: 600;
+.font2 {
+  font-family: "Press Start 2P", cursive !important;
+  font-weight: 100;
 }
 
-
-.payment_status{
-    font-size: 12px;
-    margin-top: 5px;
-    color: green;
+.payment_amount {
+  font-size: 42px;
+  margin-top: 0px;
+  font-family: "Source Code Pro", monospace;
 }
 
-.payment_date{
-    margin-top: 5px;
-    font-size: 12px;
+.payment_user {
+  font-size: 15px;
+  margin-top: 8px;
+  font-weight: 600;
+  font-family: "Source Code Pro", monospace;
 }
 
-
-.payment_choice{
-    display: flex;
-    width: 100%;
-    height: 50%;
-    background: red;
-    margin-top: 10px;
-    border-radius: 10px;
-    font-size: 2rem;
-    position: relative;
+.payment_note {
+  color: gray;
+  font-size: 13px;
+  margin-top: 9px;
+  padding: 5px;
+  background-color: rgb(46, 46, 46);
+  width: fit-content;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-family: "Source Code Pro", monospace;
 }
 
-.choice_label{
-    position: absolute;
-    top:50%;
-    left:35%;
-    z-index: 10;
-    color: white;
-    font-size: 25px;
-    transform: translate(-50%,-50%);
-
+.payment_currency {
+  font-size: 13px;
+  color: white;
+  vertical-align: baseline;
+  padding-bottom: 30px;
+  padding-left: 4px;
+  font-family: "Source Code Pro", monospace;
 }
 
-.pay_btn{
-    width: 100%;
-    border-radius: 20px;
-    background-color: rgb(73, 73, 73);
-    color: white;
-    margin: auto;
-    margin-top: 8px;
-    height: 40px;
-    font-weight: 600;
+.payment_status {
+  font-size: 12px;
+  margin-top: 5px;
+  color: rgb(5, 250, 160);
+  font-family: "Source Code Pro", monospace;
 }
 
-.pay_btn:hover{
-    cursor: pointer;
-    background-color: rgb(96, 96, 96);
+.payment_date {
+  margin-top: 5px;
+  font-size: 12px;
+  font-family: "Source Code Pro", monospace;
 }
 
-
-.imageNft{
-    width: 300px;
-    height: 300px;
-    background-color: rgb(29, 29, 29);
-    position: relative;
-    margin: auto;
-    margin-bottom: 10px;
-    border-radius: 10px;
+.payment_choice {
+  display: flex;
+  width: 90%;
+  height: 50%;
+  margin-top: 10px;
+  border-radius: 10px;
+  font-size: 2rem;
+  position: relative;
+  padding: 10px;
+  font-family: "Source Code Pro", monospace;
 }
 
-.imageNft img{
-    object-fit: contain;
-    width: 300px;
-    height: 300px;
+.choice_label {
+  position: absolute;
+  top: 80%;
+  left: 35%;
+  z-index: 501;
+  color: white;
+  font-size: 25px;
+  transform: translate(-50%, -50%);
+  font-family: "Source Code Pro", monospace;
 }
 
-.imageNft p{
-    position: absolute;
-    top:50%;
-    left:50%;
-    transform: translate(-50%,-50%);
+.choice_label1 {
+  position: absolute;
+  top: 20%;
+  right: 7%;
+  z-index: 501;
+  color: white;
+  font-size: 25px;
+  transform: translate(-50%, -50%);
+  font-family: "Source Code Pro", monospace;
+}
+
+.pay_btn {
+  width: 100%;
+  border-radius: 20px;
+  background-color: rgb(73, 73, 73);
+  color: white;
+  margin: auto;
+  margin-top: 8px;
+  height: 40px;
+  font-weight: 600;
+  font-family: "Source Code Pro", monospace;
+}
+
+.pay_btn:hover {
+  cursor: pointer;
+  background-color: rgb(5, 250, 160);
+  font-family: "Source Code Pro", monospace;
+  color: black;
+}
+
+.imageNft {
+ 
+  width: fit-content;
+  height: 300px;
+  background-color: rgb(29, 29, 29);
+  position: relative;
+  margin: auto;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  font-family: "Source Code Pro", monospace;
+}
+
+.imageNft img {
+  object-fit: contain;
+  width: fit-content;
+  height: 300px;
+  font-family: "Source Code Pro", monospace;
+}
+
+.imageNft p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Source Code Pro", monospace;
+}
+
+.form-pay {
+  font-family: "Poppins", sans-serif;
+  font-family: "Source Code Pro", monospace;
+}
+
+.form-pay2 {
+  display: flex;
+  padding: 10px;
+  background-color: rgb(54, 57, 62);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  font-family: "Source Code Pro", monospace;
+}
+
+.arrow {
+  width: 30%;
+  font-size: 30px;
+  font-weight: 700;
+  font-family: "Source Code Pro", monospace;
+}
+
+.payment_model {
+  color: white;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  position: relative;
+}
+
+.payment_model:hover {
+  background-color: rgb(68, 201, 34);
+}
+
+.one,
+.two {
+  position: absolute;
+  height: 100%;
+  width: 66%;
+}
+.one {
+  left: 0;
+  top: 0;
+
+  -webkit-clip-path: polygon(0 0, 100% 0%, 50% 100%, 0% 100%);
+  clip-path: polygon(0 0, 100% 0%, 50% 100%, 0% 100%);
+}
+.two {
+  right: 0;
+  top: 0;
+
+  -webkit-clip-path: polygon(50% 0, 100% 0%, 100% 100%, 0% 100%);
+  clip-path: polygon(50% 0, 100% 0%, 100% 100%, 0% 100%);
+}
+
+.choice_img {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  object-fit: cover;
+  height: 100%;
+}
+
+.choice_img2 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  object-fit: cover;
+  height: 100%;
 }

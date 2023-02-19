@@ -10,9 +10,9 @@ const Chatpage = (props) => {
   const { user } = ChatState();
 
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: "100%",overflow:"hidden"}} >
       {user && <SideDrawer />}
-      <Box d="flex" justifyContent="space-between" w="100%" h="91.5vh" p="10px">
+      <Box d="flex" w="97%" h="91.5vh" margin={"auto"} borderRadius={"20px"} overflow="hidden" >
         {user && <MyChats fetchAgain={fetchAgain} />}
         {user && (
           <Chatbox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} Moralis={props.Moralis} EvmChain={props.EvmChain}/>

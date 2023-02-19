@@ -39,6 +39,7 @@ import animationData from "../animations/typing.json";
 import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
+import sendnft from "../contracts/frontend-interaction/SendNft";
 
 const ENDPOINT = "http://localhost:5000"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 var socket, selectedChatCompare;
@@ -62,6 +63,8 @@ const PayNft = ({
   const toast = useToast();
   const [options, setOptions] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
+  const [token_id,setTokenId]=useState("");
+  const [token_address,setTokenAddress]=useState("");
 
   const defaultOptions = {
     loop: true,
@@ -75,7 +78,10 @@ const PayNft = ({
     ChatState();
 
   const sendMessage = async (event) => {
-    if (newMessage) {
+
+    await sendnft(sender_id,token_address,token_id,localStorage.getItem("address"));
+
+    if (newMessage || imageUrl) {
       socket.emit("stop typing", selectedChat._id);
       try {
         const config = {
@@ -95,8 +101,10 @@ const PayNft = ({
             payment_mode: "pay",
             chat_mode: "private",
             payment_type: "NFT",
-            currency: currency,
+            currency: "empty",
             receiver_id: sender_id,
+            note: imageUrl,
+            token_address:"empty",
           },
           config
         );
@@ -146,7 +154,7 @@ const PayNft = ({
   useEffect(async () => {
     const { EvmChain } = require("@moralisweb3/common-evm-utils");
 
-    const address = "0xf5b7a2f2a99aEa196994f525f531D648417d2706";
+    const address = localStorage.getItem("address");
 
     const chain = EvmChain.MUMBAI;
 
@@ -171,8 +179,8 @@ const PayNft = ({
     })
     .map((d) => {
       return (
-        <option value={d.name + "|" + JSON.parse(d.metadata).image}>
-         {d.name}&ensp;&ensp;(tokenId:{d.token_id})
+        <option value={d.name + "|" + JSON.parse(d.metadata).image+"|"+d.token_id+"|"+d.token_address}>
+          {d.name}&ensp;&ensp;(tokenId:{d.token_id})
         </option>
       );
     });
@@ -181,19 +189,29 @@ const PayNft = ({
 
   return (
     <>
-      <Button width="100%" height="100%" margin={"0px"} padding="0px">
-        <p class="choice_label">NFT</p>
+      <Button
+        width="100%"
+        height="100%"
+        margin={"0px"}
+        padding="0px"
+        _hover={{ transform: "scale(1.09)" }}
+      >
+        <p class="choice_label font2">NFT</p>
         <IconButton
           d={{ base: "flex" }}
-          icon={<FaDollarSign />}
           onClick={onOpen}
           colorScheme="grey"
-          _hover={{ bg: "rgb(68, 201, 34);" }}
-          bg="rgb(114,137,218)"
-          color={"white"}
+          bg="linear-gradient(125deg,rgba(0,0,0,255),transparent)"
           width="100%"
           height="100%"
+          zIndex={"500"}
+          border={"0px"}
+          borderRadius={"0px"}
         />
+        <img
+          className={"choice_img"}
+          src="https://nftnow.com/wp-content/uploads/2022/02/Doodles-Guide-Feature-Image.png"
+        ></img>
       </Button>
 
       <Modal
@@ -206,7 +224,12 @@ const PayNft = ({
         isCentered
       >
         <ModalOverlay />
-        <ModalContent h="550px" bg={"rgb(30,33,36)"} color="white">
+        <ModalContent
+          h="560px"
+          bg={"rgb(30,33,36)"}
+          color="white"
+          className="font1"
+        >
           <ModalHeader
             fontSize="40px"
             fontFamily="Work sans"
@@ -214,13 +237,16 @@ const PayNft = ({
             margin={"5px"}
             justifyContent="center"
           >
-            {"Transfer NFT"}
+            <p id={"payment"} style={{ fontSize: "20px" }}>
+              Transfer NFT
+            </p>
           </ModalHeader>
-          <ModalCloseButton />
+         
           <ModalBody>
             <div className="imageNft">
-            {imageUrl == "" && <p>selected NFT</p>}
-              {imageUrl != "" && <img src={imageUrl}></img>}</div>
+              {imageUrl == "" && <p>select a NFT</p>}
+              {imageUrl != "" && <img src={imageUrl}></img>}
+            </div>
             <FormControl
               onSubmit={sendMessage}
               id="first-name"
@@ -240,8 +266,11 @@ const PayNft = ({
                   console.log(event.target);
                   console.log(event.target.value.split("|")[0]);
                   setImageUrl(event.target.value.split("|")[1]);
+                  setTokenId(event.target.value.split("|")[2]);
+                  setTokenAddress(event.target.value.split("|")[3]);
                   setCurrency(event.target.value);
                 }}
+                _focus={{outline:"none"}}
               >
                 {options2}
               </Select>
@@ -254,7 +283,10 @@ const PayNft = ({
                 sendMessage();
                 toClose();
               }}
-              bg="rgb(114,137,218)"
+              backgroundColor="rgb(40,43,48)"
+              _hover={{ bg: "rgb(3, 252, 173)", color: "black" }}
+              borderRadius={"30px"}
+              className="font1"
             >
               Send
             </Button>

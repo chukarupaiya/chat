@@ -26,7 +26,7 @@ const PaymentChoice = ({
   refAgain,
   Moralis,
   EvmChain,
-  sender_id
+  sender_id,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -40,23 +40,31 @@ const PaymentChoice = ({
           icon={<FaDollarSign />}
           onClick={onOpen}
           colorScheme="grey"
-          _hover={{ bg: "rgb(2, 163, 34);" }}
-          bg="rgb(114,137,218)"
+          _hover={{ bg: "rgb(3, 252, 173);", color: "black" }}
+          bg="rgb(48, 48, 48)"
           borderRadius="50%"
           marginLeft="8px"
+          color="white"
         />
       )}
       <Modal size="lg" onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
-        <ModalContent h="410px" bg={"rgb(30,33,36)"} color="white">
-          <ModalCloseButton />
+        <ModalContent
+          h="280px"
+          bg="transparent"
+          backdropFilter="auto"
+          backdropBlur="6px"
+          color="white"
+          padding={"10px"}
+        >
           <ModalBody
             d="flex"
             flexDir="column"
             alignItems="center"
             justifyContent="space-between"
+            
           >
-            <div className="payment_choice">
+            <div className="payment_choice one">
               <Pay
                 fetchAgain={fetchAgain}
                 setFetchAgain={setFetchAgain}
@@ -66,9 +74,10 @@ const PaymentChoice = ({
                 Moralis={Moralis}
                 EvmChain={EvmChain}
                 sender_id={sender_id}
+
               ></Pay>
             </div>
-            <div className="payment_choice">
+            <div className="payment_choice two">
               <PayNft
                 fetchAgain={fetchAgain}
                 setFetchAgain={setFetchAgain}
@@ -78,18 +87,10 @@ const PaymentChoice = ({
                 Moralis={Moralis}
                 EvmChain={EvmChain}
                 sender_id={sender_id}
+                
               ></PayNft>
             </div>
           </ModalBody>
-          <ModalFooter>
-            <Button
-              onClick={onClose}
-              bg="rgb(114,137,218)"
-              marginRight={"10px"}
-            >
-              Close
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

@@ -1,3 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400&display=swap');
+
+
+#single_class_div{
+    font-family: 'Poppins', sans-serif;
+    width: 100%;
+    height: 95%;
+}
+
+.font1{
+    font-family: 'Source Code Pro', monospace;
+}
+
 .pay-btn{
     width: 40px;
     height: 40px;
@@ -8,6 +22,7 @@
     margin-left: 10px;
     color: white;
     background-color: rgb(54,57,62);
+    
     
 }
 

@@ -8,6 +8,8 @@ const messageSchema = mongoose.Schema(
     payment:{ type : Boolean},
     payment_mode:{ type: String, trim: true },
     chat_mode:{ type: String, trim: true },
+    note:{ type: String, trim: true },
+    token_address:{ type: String, trim: true },
     payment_type:{ type: String, trim: true },
     currency:{ type: String, trim: true },
     receiver_id:{ type: String, trim: true },

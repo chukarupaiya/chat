@@ -2,6 +2,9 @@ import { Button } from "@chakra-ui/button";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
+import img from "./profile.png";
+import { FaUser } from "react-icons/fa";
+import img1 from '../../logo.png'
 import {
   Menu,
   MenuButton,
@@ -53,6 +56,7 @@ function SideDrawer() {
 
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
+    localStorage.removeItem("address");
     history.push("/");
   };
 
@@ -128,21 +132,27 @@ function SideDrawer() {
         d="flex"
         justifyContent="space-between"
         alignItems="center"
-        bg="white"
+        bg="rgb(30,33,36)"
         w="100%"
         p="5px 10px 5px 10px"
-        borderWidth="5px"
+        color="white"
+        className="font1"
       >
-        <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
-          <Button variant="ghost" onClick={onOpen}>
+        {/* <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
+          <Button
+            variant="ghost"
+            onClick={onOpen}
+            _hover={{ bg: "rgb(3, 252, 173);", color: "black" }}
+          >
             <i className="fas fa-search"></i>
             <Text d={{ base: "none", md: "flex" }} px={4}>
               Search User
             </Text>
           </Button>
-        </Tooltip>
+        </Tooltip> */}
+        <img src={img1} style={{width:"100px",height:"100px",objectFit:"cover",position:"absolute","top":"-18px","left":"0px"}}></img>
         <Text fontSize="2xl" fontFamily="Work sans">
-          Talk-A-Tive
+          {/* Talk-A-Tive */}
         </Text>
         <div>
           <Menu>
@@ -153,7 +163,14 @@ function SideDrawer() {
               />
               <BellIcon fontSize="2xl" m={1} />
             </MenuButton>
-            <MenuList pl={2}>
+            <MenuList
+              pl={2}
+              zIndex={"10001"}
+              _hover={{ bg: "rgb(3, 252, 173);", color: "black" }}
+              bg="rgb(30,33,36)"
+              border={"0px"}
+              color={"white"}
+            >
               {!notification.length && "No New Messages"}
               {notification.map((notif) => (
                 <MenuItem
@@ -171,26 +188,40 @@ function SideDrawer() {
             </MenuList>
           </Menu>
           <Menu>
-            <MenuButton as={Button} bg="white" rightIcon={<ChevronDownIcon />}>
-              <Avatar
-                size="sm"
-                cursor="pointer"
-                name={user.name}
-                src={user.pic}
-              />
+            <MenuButton
+              as={Button}
+              rightIcon={<ChevronDownIcon />}
+              _hover={{ bg: "rgb(3, 252, 173);", color: "black" }}
+              bg="rgb(30,33,36)"
+              border={"0px"}
+            >
+              <FaUser />
             </MenuButton>
-            <MenuList>
+            <MenuList bg="rgb(66,69,73)" border={"0px"} zIndex={"10001"}>
               <ProfileModal user={user}>
-                <MenuItem>My Profile</MenuItem>{" "}
+                <MenuItem
+                  _hover={{ bg: "rgb(3, 252, 173);", color: "black" }}
+                  _focus={{ bg: "rgb(3, 252, 173);", color: "black" }}
+                  border={"0px"}
+                >
+                  My Profile
+                </MenuItem>{" "}
               </ProfileModal>
               <MenuDivider />
-              <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+              <MenuItem
+                onClick={logoutHandler}
+                _hover={{ bg: "rgb(3, 252, 173);", color: "black" }}
+                _focus={{ bg: "rgb(3, 252, 173);", color: "black" }}
+                border={"0px"}
+              >
+                Logout
+              </MenuItem>
             </MenuList>
           </Menu>
         </div>
       </Box>
 
-      <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
+      {/* <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px">Search Users</DrawerHeader>
@@ -218,7 +249,7 @@ function SideDrawer() {
             {loadingChat && <Spinner ml="auto" d="flex" />}
           </DrawerBody>
         </DrawerContent>
-      </Drawer>
+      </Drawer> */}
     </>
   );
 }

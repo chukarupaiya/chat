@@ -11,7 +11,7 @@ const Login = (props) => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
-  const [password, setPassword] = useState();
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [walletAddr,setWalletAddr]=useState(props.walletAddr);
 
@@ -53,13 +53,16 @@ const Login = (props) => {
         isClosable: true,
         position: "bottom",
       });
+      console.log(data);
       localStorage.setItem("userInfo", JSON.stringify(data));
+      
       setLoading(false);
-      history.push("/chats");
+      history.push("/chats")
+      
     } catch (error) {
       toast({
         title: "Error Occured!",
-        description: error.response.data.message,
+        description: error,
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -67,6 +70,8 @@ const Login = (props) => {
       });
       setLoading(false);
     }
+
+   
   };
 
   return (
@@ -102,6 +107,7 @@ const Login = (props) => {
         style={{ marginTop: 15 }}
         onClick={submitHandler}
         isLoading={loading}
+        borderRadius={"20px"}
       >
         Login
       </Button>

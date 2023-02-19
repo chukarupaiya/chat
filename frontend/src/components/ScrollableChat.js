@@ -9,10 +9,13 @@ import {
 } from "../config/ChatLogics";
 import { ChatState } from "../Context/ChatProvider";
 import "./Pay.css";
+import MultiToken from "./payment/MultiToken";
+import Nft from "./payment/Nft";
 import PayToken from "./payment/PayToken";
+import RequestCrowd from "./payment/RequestCrowd";
 import RequestToken from "./payment/RequestToken";
 
-const ScrollableChat = ({ messages ,refAgain}) => {
+const ScrollableChat = ({ messages, refAgain }) => {
   const { user } = ChatState();
 
   return (
@@ -20,22 +23,43 @@ const ScrollableChat = ({ messages ,refAgain}) => {
       {messages &&
         messages.map((m, i) =>
           m.payment ? (
-            m.payment_type == "token" ? (
-              m.payment_mode == "request" ? (
-                <RequestToken
-                  sender_name={m.sender.name}
-                  sender_pic={m.sender.pic}
-                  sender_id={m.sender._id}
-                  content={m.content}
-                  id={m._id}
-                  messages={messages}
-                  m={m}
-                  i={i}
-                  user_id={user._id}
-                  refAgain={refAgain}
-                ></RequestToken>
+            m.chat_mode == "private" ? (
+              m.payment_type == "token" ? (
+                m.payment_mode == "request" ? (
+                  <RequestToken
+                    sender_name={m.sender.name}
+                    sender_pic={m.sender.pic}
+                    sender_id={m.sender._id}
+                    content={m.content}
+                    id={m._id}
+                    messages={messages}
+                    m={m}
+                    i={i}
+                    user_id={user._id}
+                    refAgain={refAgain}
+                    note={m.note}
+                    currency={m.currency}
+                    token_address={m.token_address}
+                    date={m.createdAt}
+                  ></RequestToken>
+                ) : (
+                  <PayToken
+                    sender_name={m.sender.name}
+                    sender_pic={m.sender.pic}
+                    sender_id={m.sender._id}
+                    content={m.content}
+                    id={m._id}
+                    messages={messages}
+                    m={m}
+                    i={i}
+                    user_id={user._id}
+                    note={m.note}
+                    currency={m.currency}
+                    date={m.createdAt}
+                  ></PayToken>
+                )
               ) : (
-                <PayToken
+                <Nft
                   sender_name={m.sender.name}
                   sender_pic={m.sender.pic}
                   sender_id={m.sender._id}
@@ -45,10 +69,59 @@ const ScrollableChat = ({ messages ,refAgain}) => {
                   m={m}
                   i={i}
                   user_id={user._id}
-                ></PayToken>
+                  note={m.note}
+                  currency={m.currency}
+                  date={m.createdAt}
+                ></Nft>
               )
+            ) : m.payment_type == "token" ? (
+              <MultiToken
+                sender_name={m.sender.name}
+                sender_pic={m.sender.pic}
+                sender_id={m.sender._id}
+                content={m.content}
+                id={m._id}
+                messages={messages}
+                m={m}
+                i={i}
+                user_id={user._id}
+                note={m.note}
+                currency={m.currency}
+                date={m.createdAt}
+                to={m.token_address}
+              ></MultiToken>
+            ) : m.payment_type == "NFT" ? (
+              <Nft
+                sender_name={m.sender.name}
+                sender_pic={m.sender.pic}
+                sender_id={m.sender._id}
+                content={m.content}
+                id={m._id}
+                messages={messages}
+                m={m}
+                i={i}
+                user_id={user._id}
+                note={m.note}
+                currency={m.currency}
+                date={m.createdAt}
+              ></Nft>
             ) : (
-              <div></div>
+              <RequestCrowd
+                sender_name={m.sender.name}
+                sender_pic={m.sender.pic}
+                sender_id={m.sender._id}
+                content={m.content}
+                id={m._id}
+                messages={messages}
+                m={m}
+                i={i}
+                user_id={user._id}
+                note={m.note}
+                currency={m.currency}
+                date={m.createdAt}
+                to={m.token_address}
+                last={m.payment_mode}
+              />
             )
           ) : (
             <div style={{ display: "flex" }} key={m._id}>

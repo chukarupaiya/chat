@@ -30,7 +30,9 @@ const sendMessage = asyncHandler(async (req, res) => {
     chat_mode,
     payment_type,
     currency,
-    receiver_id
+    receiver_id,
+    note,
+    token_address
   } = req.body;
 
   if (!content || !chatId) {
@@ -47,7 +49,9 @@ const sendMessage = asyncHandler(async (req, res) => {
     chat_mode: chat_mode,
     payment_type: payment_type,
     currency: currency,
-    receiver_id:receiver_id
+    receiver_id:receiver_id,
+    note:note,
+    token_address:token_address
   };
 
   try {
