@@ -1,7 +1,7 @@
-# <a href="https://www.google.com/" target="_blank">saké</a>
+# <a href="(https://main--sake-ethforall.netlify.app/)" target="_blank">Saké</a> - Devfolio **EthForAll** hackathon submission
 ```Raise a Glass to Easy Chatting and Payments with Sake```<br>
-Devfolio **EthForAll** hackathon submission
-![jiraya](https://user-images.githubusercontent.com/88236255/219977334-e1988405-b32a-4d4b-998d-a3fb2ea25f23.jpeg)
+
+![jiraya](https://user-images.githubusercontent.com/88236255/219977334-e1988405-b32a-4d4b-998d-a3fb2ea25f23.jpeg)<br>
 Traditional chat apps face a number of issues that are resolved by saké, an anonymous chat app with decentralized payment integration.
 ## features
 > uncork the insecurities
