@@ -27,5 +27,11 @@ Push Protocol
 Each transaction recevied will get a notification along with a note in the front end.
 This is made possible by the push protocol using the push SDK
 ```
+```
+Mantle - Defi & Public Good 
+Ease of sending and requesting erc20, ether, NFT etc in the mantle and 
+Also a new way of crowdfunding and multi-sig wallets with secure access control .
+All these features are integrated into the chat App using a smart contract  deployed in mantle chain.
+```
 ## What's next for saké
 saké is just a child rightnow .It has a lot of potenial.. A few features we think of adding polygonID entery to grps, cross chain transactions, adding snaps in metamask for the transaction with notes, airdrops, chat backup into ipfs for important messages, making it into a mobile app for easier usage and many more.
